@@ -3,13 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="messagePrinter" class="test.spring.hello.MessagePrinter">
-		<constructor-arg ref="messageService" />
+	<bean id="foo" name="foo1,foo2;foo3" class="test.spring.bean.Foo">
+		<property name="fooMessage" value="This the Default Foo Message!" />
 	</bean>
 
-	<bean id="messageService" class="test.spring.hello.MessageServiceImpl">
-		<property name="message" value="Hello World" />
-	</bean>
-
-	<!-- more bean definitions go here -->
+	<alias name="foo" alias="fooA1"/>
+	<alias name="foo" alias="fooA2"/>
+	<alias name="foo1" alias="fooB1"/>
+	<alias name="foo1" alias="fooB2"/>
 </beans>
