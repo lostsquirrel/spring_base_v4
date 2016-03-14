@@ -1,4 +1,4 @@
-package hello;
+package test.spring.hello;
 
 public class MessageServiceImpl implements MessageService {
 
