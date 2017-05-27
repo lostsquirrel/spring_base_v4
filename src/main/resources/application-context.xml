@@ -3,52 +3,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/task
            http://www.springframework.org/schema/task/spring-task.xsd
            http://www.springframework.org/schema/context
-		   http://www.springframework.org/schema/context/spring-context.xsd">
+		   http://www.springframework.org/schema/context/spring-context.xsd
+		   http://www.springframework.org/schema/aop
+       	   http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<context:component-scan base-package="task" />
+	<context:component-scan base-package="demo.spring.aspect" />
 	
-	<bean id="taskExecutor"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="5" />
-		<property name="maxPoolSize" value="10" />
-		<property name="queueCapacity" value="25" />
-	</bean>
-
-	<bean id="taskExecutorExample" class="task.TaskExecutorExample">
-		<constructor-arg ref="taskExecutor" />
-	</bean>
-
-	<task:scheduler id="myScheduler" pool-size="10" />
-	
-	<task:executor id="executor" pool-size="10" />
+	<aop:aspectj-autoproxy/>
 	<!-- 
-	<task:executor id="executorWithPoolSizeRange" pool-size="5-25"
-		queue-capacity="100" />
-		
-	<task:executor id="executorWithCallerRunsPolicy"
-		pool-size="5-25" queue-capacity="100" rejection-policy="CALLER_RUNS" />
-		
-	<task:executor id="executorWithKeepAlive" pool-size="5-25"
-		keep-alive="120" />
- -->
-	<task:scheduled-tasks scheduler="myScheduler">
-	<task:scheduled ref="taskExecutorExample" method="printMessages"
-			fixed-delay="5000" />
- <!-- 
-		<task:scheduled ref="beanA" method="methodA"
-			fixed-delay="1000" />
-		<task:scheduled ref="beanA" method="methodA1"
-			fixed-delay="1000" initial-delay="5000" />
-		<task:scheduled ref="beanB" method="methodB"
-			fixed-rate="4000" />
-		<task:scheduled ref="beanC" method="methodC"
-			cron="*/1 * * * * MON-FRI" />
+	<bean id="after" class="demo.spring.aspect.AfterFinallyExample" />
 	 -->
-	</task:scheduled-tasks>
 </beans>
