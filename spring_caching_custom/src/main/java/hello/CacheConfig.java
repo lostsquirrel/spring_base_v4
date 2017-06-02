@@ -21,7 +21,8 @@ public class CacheConfig extends CachingConfigurerSupport {
 	}
 	
 	@Bean
-	public CacheResolver cacheResolver(CacheManager cacheManager) {
+	public CacheResolver cacheResolver() {
+		CacheManager cacheManager = this.cacheManager();
 		CustomCacheResolver cacheResolver = new CustomCacheResolver(cacheManager);
 		return cacheResolver;
 	}
