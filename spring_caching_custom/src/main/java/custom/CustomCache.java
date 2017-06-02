@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 /**
  * a unsafe cache implements
  */
-public class CustomCache extends AbstractValueAdaptingCache implements Cache {
+public class CustomCache implements Cache {
 
 	private final static Logger log = LoggerFactory.getLogger(CustomCache.class);
 
@@ -21,7 +21,6 @@ public class CustomCache extends AbstractValueAdaptingCache implements Cache {
 	private HashMap<Object, Object> cache = new HashMap<>();
 
 	public CustomCache(String name) {
-		super(true);
 		this.name = name;
 		log.debug("create CustomCache {}", name);
 	}
@@ -34,6 +33,26 @@ public class CustomCache extends AbstractValueAdaptingCache implements Cache {
     @Override
     public Object getNativeCache() {
         return cache;
+    }
+
+    @Override
+    public ValueWrapper get(Object key) {
+	    Object v = cache.get(key);
+        ValueWrapper val = null;
+	    if (v != null) {
+            val = new ValueWrapper() {
+                @Override
+                public Object get() {
+                    return v;
+                }
+            };
+        }
+        return val;
+    }
+
+    @Override
+    public <T> T get(Object key, Class<T> type) {
+        return null;
     }
 
     @Override
@@ -64,9 +83,4 @@ public class CustomCache extends AbstractValueAdaptingCache implements Cache {
         cache.clear();
     }
 
-
-    @Override
-    protected Object lookup(Object key) {
-        return cache.get(key);
-    }
 }
